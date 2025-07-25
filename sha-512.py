@@ -1,23 +1,19 @@
 import hashlib
 
 def calculate_sha512(file_path):
-    sha512_hash = hashlib.sha512()
-    with open(file_path, 'rb') as file:
-        for byte_block in iter(lambda: file.read(4096), b""):
-            sha512_hash.update(byte_block)
-    return sha512_hash.hexdigest()
+    sha512 = hashlib.sha512()
+    with open(file_path, 'rb') as f:
+        for block in iter(lambda: f.read(4096), b""):
+            sha512.update(block)
+    return sha512.hexdigest()
 
+# Target file
 original_file = "original.docx"
 original_hash = calculate_sha512(original_file)
-# print("Original File Hash:", original_hash)
 
-received_file = "original_copy.docx"
-received_hash = calculate_sha512(received_file)
-# print("Received File Hash:", received_hash)
+# Save to file
+with open("original_hash.txt", "w") as f:
+    f.write(original_hash)
 
-if original_hash == received_hash:
-    print("The files are identical. Integrity OK.")
-else:
-    print("The files are different. Integrity FAILED.")
-    
-#find a algorithm which do same work as sha512 but different method and not using hashing 
+print("SHA-512 hash saved to original_hash.txt")
+print("Hash:", original_hash)
