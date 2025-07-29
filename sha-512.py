@@ -7,13 +7,24 @@ def calculate_sha512(file_path):
             sha512.update(block)
     return sha512.hexdigest()
 
-# Target file
-original_file = "original.docx"
-original_hash = calculate_sha512(original_file)
+file1 = "original.docx"
+file2 = "original_copy.docx"
 
-# Save to file
-with open("original_hash.txt", "w") as f:
-    f.write(original_hash)
+hash1 = calculate_sha512(file1)
+hash2 = calculate_sha512(file2)
 
-print("SHA-512 hash saved to original_hash.txt")
-print("Hash:", original_hash)
+with open("file1_hash.txt", "w") as f:
+    f.write(hash1)
+
+with open("file2_hash.txt", "w") as f:
+    f.write(hash2)
+
+print("SHA-512 hash for file1 saved to file1_hash.txt")
+print("SHA-512 hash for file2 saved to file2_hash.txt")
+print("Hash of file1:", hash1)
+print("Hash of file2:", hash2)
+
+if hash1 == hash2:
+    print("The files are identical.")
+else:
+    print("The files are different.")
